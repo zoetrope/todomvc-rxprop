@@ -7,7 +7,7 @@
  *
  * @type {angular.Module}
  */
-var todomvc = angular.module('todomvc', ['ngRoute'])
+var todomvc = angular.module('todomvc', ['ngRoute', 'rxprop'])
 	.config(function ($routeProvider) {
 		$routeProvider.when('/', {
 			controller: 'TodoCtrl',
