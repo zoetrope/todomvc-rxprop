@@ -2,9 +2,9 @@
   "name": "todomvc-rxprop",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "1.2.9",
-    "angular-route": "~1.2.9",
+    "angular": "1.2.10",
+    "angular-route": "~1.2.10",
     "todomvc-common": "~0.1.4",
-    "reactiveproperty-angular": "~0.1.4"
+    "reactiveproperty-angular": "~0.2.0"
   }
 }

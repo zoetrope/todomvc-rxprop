@@ -7,7 +7,7 @@
  * - exposes the model to the template and provides event handlers
  */
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, todoStorage, filterFilter) {
-    $scope.todos = new rxprop.ReactiveCollection($scope, todoStorage.get());
+    $scope.todos = new rxprop.ReactiveCollection($scope, {initValues: todoStorage.get()});
 
     $scope.newTodo = '';
     $scope.editedTodo = null;
@@ -58,10 +58,10 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, todoStora
             $scope.newTodo = '';
         });
 
-    $scope.editTodo = new rxprop.ReactiveCommand($scope, function (todo) {
+    $scope.editTodo = new rxprop.ReactiveCommand($scope, {action: function (todo) {
         $scope.editedTodo = todo;
         $scope.originalTodo = angular.extend({}, todo);
-    });
+    }});
 
     $scope.doneEditing = new rxprop.ReactiveCommand($scope);
     $scope.doneEditing
@@ -77,24 +77,24 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, todoStora
             $scope.removeTodo.execute(todo);
         });
 
-    $scope.revertEditing = new rxprop.ReactiveCommand($scope, function (todo) {
+    $scope.revertEditing = new rxprop.ReactiveCommand($scope, {action: function (todo) {
         $scope.todos.update(todo, $scope.originalTodo);
         $scope.doneEditing.execute($scope.originalTodo);
-    });
+    }});
 
-    $scope.removeTodo = new rxprop.ReactiveCommand($scope, function (todo) {
+    $scope.removeTodo = new rxprop.ReactiveCommand($scope, {action: function (todo) {
         $scope.todos.remove(todo);
-    });
+    }});
 
-    $scope.clearCompletedTodos = new rxprop.ReactiveCommand($scope, function (_) {
+    $scope.clearCompletedTodos = new rxprop.ReactiveCommand($scope, {action: function (_) {
         $scope.todos.values = $scope.todos.values.filter(function (val) {
             return !val.completed;
         });
-    });
+    }});
 
-    $scope.markAll = new rxprop.ReactiveCommand($scope, function (completed) {
+    $scope.markAll = new rxprop.ReactiveCommand($scope, {action: function (completed) {
         $scope.todos.values.forEach(function (todo) {
             todo.completed = !completed;
         });
-    });
+    }});
 });
